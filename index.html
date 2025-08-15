@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTML + CSS 練習頁</title>
+  <style>
+    /* --- 基礎 Reset --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* --- 色彩系統（CSS 變數）--- */
+    :root {
+      --bg: #0f172a;         /* 背景深藍 */
+      --text: #e2e8f0;       /* 文字淺灰 */
+      --brand: #22c55e;      /* 主色（綠）*/
+      --brand-2: #60a5fa;    /* 襯色（藍）*/
+      --muted: #334155;      /* 互動 hover 底色 */
+    }
+
+    /* --- 全站排版 --- */
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b1220, var(--bg));
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+
+    /* --- 導覽列（Flex）--- */
+    header { position: sticky; top: 0; backdrop-filter: saturate(180%) blur(10px); background: rgba(2,6,23,.6); border-bottom: 1px solid #1f2937; }
+    nav ul { display: flex; gap: 16px; list-style: none; padding: 12px 0; }
+    nav a { color: var(--text); text-decoration: none; padding: 8px 12px; border-radius: 9999px; transition: transform .2s ease; }
+    nav a:hover { background: var(--muted); transform: translateY(-2px); }
+
+    /* --- hero（Grid 排版）--- */
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center; padding: 32px 0; }
+    h1 { font-size: clamp(28px, 3vw, 40px); }
+    p { margin: 8px 0 16px; }
+
+    /* --- 按鈕（互動 & 陰影）--- */
+    .button { display: inline-block; background: var(--brand); color: #0b1220; padding: 10px 16px; border-radius: 12px; text-decoration: none; font-weight: 700; box-shadow: 0 10px 20px rgba(34,197,94,.2); transition: transform .2s ease, box-shadow .2s ease; }
+    .button:hover { transform: translateY(-3px); box-shadow: 0 18px 30px rgba(34,197,94,.35); }
+
+    /* --- 卡片區（Grid）--- */
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: rgba(255,255,255,.04); border: 1px solid #1f2937; padding: 16px; border-radius: 16px; min-height: 150px; position: relative; overflow: hidden; }
+    .card h3 { margin-bottom: 6px; }
+    .badge { position: absolute; top: 12px; right: 12px; background: var(--brand-2); color: #0b1220; padding: 4px 8px; border-radius: 9999px; font-size: 12px; }
+
+    /* --- 圖片與說明 --- */
+    figure { margin: 0; }
+    figure img { width: 100%; border-radius: 12px; }
+    figcaption { font-size: 12px; color: #cbd5e1; margin-top: 6px; }
+
+    /* --- 底部 --- */
+    footer { margin-top: 40px; border-top: 1px solid #1f2937; padding: 20px 0; font-size: 14px; }
+
+    /* --- 動畫 --- */
+    @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+    .floating { animation: float 3s ease-in-out infinite; }
+
+    /* --- RWD（斷點 768px）--- */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      nav ul { overflow: auto; }
+    }
+
+    /* --- 無動畫偏好（無障礙）--- */
+    @media (prefers-reduced-motion: reduce) {
+      .floating, .button, nav a { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="主要導覽">
+        <ul>
+          <li><a href="#intro">介紹</a></li>
+          <li><a href="#cards">語言練習</a></li>
+          <li><a href="#media">媒體與清單</a></li>
+          <li><a href="#form">表單</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="intro" class="hero">
+      <div>
+        <h1 class="floating">HTML & CSS 練習頁</h1>
+        <p>試試看</p>
+        <a class="button" href="#cards">開始練習</a>
+      </div>
+      <figure>
+        <img src="https://picsum.photos/600/400?grayscale" alt="隨機佈景圖片" />
+        <figcaption>使用 <code>&lt;figure&gt;</code> 與 <code>&lt;figcaption&gt;</code> 包裝圖片與說明。</figcaption>
+      </figure>
+    </section>
+
+    <section id="cards" aria-labelledby="cards-title">
+      <h2 id="cards-title">這裡是我在練習開立卡片模組的地方</h2>
+      <div class="card-grid">
+        <article class="card">
+          <span class="badge">這裡是標籤
+          </span>
+          <h3>第一張圖片</h3>
+          <p>要用這幾個編輯 <code>&lt;header&gt;</code>、<code>&lt;main&gt;</code>、
+            <code>&lt;section&gt;</code>、<code>&lt;article&gt;</code>、<code>&lt;footer&gt;</code>。</p>
+        </article>
+        <article class="card">
+          <span class="badge">這裡標籤</span>
+          <h3>第二張紀錄</h3>
+          <p>我的筆記區</p>
+          <p>用 <strong>Grid</strong> 與 <strong>Flex</strong> 佈局；此區塊使用 Grid，導覽列使用 Flex。</p>
+        </article>
+        <article class="card">
+          <span class="badge">這裡是標籤
+       </span>
+          <h3>第三張筆記本</h3>
+          <p>根變數 <code>:root</code> 管理配色；按鈕使用 <em>hover</em> 過渡，標題使用 <em>keyframes</em> 動畫。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="media">
+      <h2>練習列點換行
+     </h2>
+      <ul>
+        <li>第一個</li>
+        <li>使用 <code>&lt;ul&gt;</code> 與 <code>&lt;li&gt;</code>。</li>
+      </ul>
+      <ol>
+        <li>有序清單第一項</li>
+        <li>第二項</li>
+      </ol>
+      <blockquote cite="https://developer.mozilla.org/">
+        引用：我眼睛要花ㄌ。
+      </blockquote>
+    </section>
+
+    <sec｀tion id="form">
+      <h2>表單功能（戰勝LEP）</h2>
+      <form>
+        <label for="email">Email：</label>
+        <input id="email" type="email" placeholder="you@example.com" required />
+        <button class="button" type="submit">送出</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>&copy; 2025 練習頁。<small>提示：縮小視窗測試 RWD；在行動裝置上導覽會自動換行。</small></p>
+  </footer>
+</body>
+</html>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  
+
+<div>
+<div style="background-color:#000000 ; border-radius: 20px; border: 1px solid #000000;width: 60%;">
+  <h2 style="background-color:#ffc34d;border-radius: 20px;padding: 10px 30px">嘗試加入色塊<h2>
+   <p style="padding: 10px 30px;">
+
+<h3><strong>字體顏色改變</strong></h3>
+
+<h3><strong>測試換行成功</strong></h3></p> 
+</div>
+  <div style="width: 40%;">
+    </div>
+ </div> 
+ <a onmouseover="this.style.cssText='color:red;'" onmouseout="this.style.cssText='color:black'">測試</a>
+  <div style="width:40%; overflow: hidden;">
+  <img class="imgpic"src="https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK9159.jpg?w=2210&quality=50" alt="">    </div>
+<style type="text/css">
+  .imgpic {
+    width: 100%;
+    transition: all 0.3s;
+  } 
+  .imgpic:hover {
+    width: 110%;
+  } 
+  .test-group{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width:300px;  
+    
+    margin-top: -300px;
+ }
+  .test1{
+    position: absolute;
+    width: 300px; 
+    height: 200px; 
+    border: 1px solid #222; 
+    animation: tIn 0.3s ease;
+    display: none;
+    box-sizing: border-box ;
+    margin-left: -320px;
+    margin-top: -100px;
+    background-color: #ffb3b3;
+    padding: 10px;
+  } 
+ 
+  .test2{
+    position: absolute;
+    width: 300px; 
+    height: 200px; 
+    border: 1px solid #222; 
+    animation: tIn 0.3s ease;
+    box-sizing: border-box ;
+    margin-left: -320px;
+    margin-top: 100px;
+    display: none;
+    background-color: #f2e6ff;
+    padding: 10px;
+  } 
+ 
+  .test3{
+    position: absolute;
+    width: 300px; 
+    height: 200px; 
+    border: 1px solid #222; 
+    
+    animation: tIn_r 0.3s ease;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    margin-left: 420px;
+    margin-top: -100px;
+    display: none;
+    background-color: #ebfaeb;
+    padding: 10px;
+  } 
+  .test4{
+    position: absolute;
+    width: 300px; 
+    height: 200px; 
+    border: 1px solid #222;  
+    animation: tIn_r 0.3s ease;
+    transition: all 0.3s;
+    box-sizing: border-box ;
+    margin-left: 420px;
+    margin-top: 100px;
+    display: none;
+    background-color: #e6f2ff;
+    padding: 10px;
+  } 
+  .test_center{
+    position: absolute;
+    width: 300px; 
+    height: 200px; 
+    border: 1px solid #222;  
+    animation: tIn_t 0.3s ease;
+    transition: all 0.3s;
+    box-sizing: border-box ;
+    margin-left: 50px;
+    margin-top: -280px;
+    display: none;
+    background-color: #ffe6e6;
+    padding: 10px;
+  } 
+  .test1_X {
+    cursor: pointer;
+    width: 5px;
+    height: 5px;
+    padding: 5px;
+    margin-right: 20px;
+    float: right;
+    color: #333;
+  }
+  @keyframes tIn {
+    0% {
+    transform: translateX(0px)
+      }
+    100% {
+    transform: translateX(-100px)
+      }
+  }
+  @keyframes tIn_r {
+    0% {
+    transform: translateX(0px)
+      }
+    100% {
+    transform: translateX(100px)
+      }
+  }
+  @keyframes tIn_t {
+    0% {
+    transform: translateY(0px)
+      }
+    100% {
+    transform: translateY(-100px)
+      }
+  }
+  #po,#blue,#green,#red,#top{
+    cursor: pointer;
+    
+  }
+  #po:hover,#blue:hover,#red:hover,#green:hover,#top:hover{
+    transform: translate(3px,3px);
+    
+  }
+  
+  
+</style>
+  
+  <div style="width: 400px; display: block; margin: auto;">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500px"
+	 height="400px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
+<g id="po">
+	<path fill="#6A4B8F" d="M20,500h230V244H0v236C0,491.046,8.954,500,20,500z"/>
+	<rect x="25" y="330" fill="none" width="214" height="177"/>
+	<text transform="matrix(1 0 0 1 27 356.7041)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">猜猜我是誰</tspan><tspan x="15" y="36" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">換行補充</tspan></text>
+</g>
+<g id="blue">
+	<path fill="#3AB6D8" d="M250,500h230c11.046,0,20-8.954,20-20V244H250V500z"/>
+	<rect x="268" y="330" fill="none" width="214" height="177"/>
+	<text transform="matrix(1 0 0 1 270 356.7041)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">大風吹</tspan><tspan x="45" y="36" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">換行補充</tspan></text>
+</g>
+<g id="green">
+	<path fill="#98BE45" d="M500,244V20c0-11.046-8.954-20-20-20H250v244H500z"/>
+	<rect x="282" y="108.011" fill="none" width="183" height="68.989"/>
+	<text transform="matrix(1 0 0 1 283.5 134.7153)" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">智慧健康照顧</text>
+</g>
+<g id="red">
+	<path fill="#D6413D" d="M250,0H20C8.954,0,0,8.954,0,20v224h250V0z"/>
+	<rect x="36" y="85" fill="none" width="183" height="159"/>
+	<text transform="matrix(1 0 0 1 37.5 111.7041)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">測試四宮格方塊</tspan><tspan x="15" y="36" fill="#FFFFFF" font-family="'MicrosoftJhengHeiLight'" font-size="30">設計</tspan></text>
+</g>
+<g id="top">
+	<path fill="#F1D7D8" d="M413,270c0,11.046-12.93,20-28.879,20H119.878C103.929,290,91,281.046,91,270v-52
+		c0-11.046,12.929-20,28.878-20h264.243C400.07,198,413,206.954,413,218V270z"/>
+	<rect x="75" y="207.5" fill="none" width="364" height="85"/>
+	<text transform="matrix(1 0 0 1 193.4111 234.2041)"><tspan x="0" y="0" font-family="'MicrosoftJhengHeiLight'" font-size="30">東南西北</tspan><tspan x="-66.973" y="36" font-family="'MicrosoftJhengHeiLight'" font-size="30">選一個</tspan></text>
+</g>
+</svg>
+
+</div>  
+  <div class="test-group">
+<div class="test1">
+  <div class="test1_X" onclick="this.parentElement.style.display='none'">X</div>
+  <p>test1</p>
+  </div>
+<div class="test2">
+  <div class="test1_X" onclick="this.parentElement.style.display='none'">X</div>
+  <p>test2</p>
+    </div>
+<div class="test3">
+  <div class="test1_X" onclick="this.parentElement.style.display='none'">X</div>
+  <p>test3</p>
+    </div>   
+<div class="test4">
+  <div class="test1_X" onclick="this.parentElement.style.display='none'">X</div>
+  <p>test4</p>
+    </div>  
+<div class="test_center">
+  <div class="test1_X" onclick="this.parentElement.style.display='none'">X</div>
+  <p>課程內容:<br>
+    <li>智慧科技概論</li></p>
+    </div>  
+<script type="text/javascript">
+  //po
+$('#po').click(function(){
+      $('.test2').show();
+     
+    });
+
+  //red
+$('#red').click(function(){
+      $('.test1').show();
+    });
+  //green
+$('#green').click(function(){
+      
+      $('.test3').show();
+  
+    }); 
+$('#blue').click(function(){
+      $('.test4').show();
+    });
+$('#top').click(function(){
+      $('.test_center').show();
+
+  
+    });
+
+</script> 
